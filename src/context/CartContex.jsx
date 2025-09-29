@@ -123,6 +123,11 @@ export const CartProvider = ({ children }) => {
   const clearCartState = () => {
     setCart([]);
   };
+
+  const cartBadge = () => {
+    return cart.reduce((acc, product) => acc + product.quantity, 0);
+  };
+
   return (
     <CartContext.Provider
       value={{
@@ -132,6 +137,7 @@ export const CartProvider = ({ children }) => {
         clearCart,
         clearCartState,
         falseCart,
+        cartBadge,
       }}
     >
       {children}

@@ -43,7 +43,7 @@ export default function Cart() {
       window.location.href = paymentData.init_point;
     } catch (error) {
       console.error("Error al generar checkout:", error);
-      alert("Hubo un problema al procesar tu pago.");
+      alert("Hubo un problema al procesar tu pago. Por favor inicie Sesión");
     }
   };
 

@@ -3,6 +3,7 @@ import React from "react";
 import { MapPin, ShoppingCart } from "lucide-react";
 import { useUser } from "../context/UserContext";
 import { useCart } from "../context/CartContex";
+import CartWidget from "./CartWidget";
 
 export default function Navbar() {
   const { user, logoutUser } = useUser();
@@ -91,13 +92,19 @@ export default function Navbar() {
             >
               Login
             </NavLink>
-            <Link
-              to="/carrito"
-              className="text-sm text-neutral-600 hover:text-neutral-900"
-              title="Carrito"
+            <NavLink
+              to="/register"
+              className={({ isActive }) =>
+                `text-sm ${
+                  isActive
+                    ? "font-semibold"
+                    : "text-neutral-600 hover:text-neutral-900"
+                }`
+              }
             >
-              <ShoppingCart className="h-6 w-6 text-neutral-700" />
-            </Link>
+              Resgistarse
+            </NavLink>
+            <CartWidget />
           </nav>
         </div>
       </header>
