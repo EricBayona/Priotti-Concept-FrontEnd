@@ -23,14 +23,17 @@ export default function Cart() {
   const handleCheckout = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch("http://localhost:8080/api/carts/mycart", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await fetch(
+        "https://priotti-concept-backend.onrender.com/api/carts/mycart",
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       const data = await res.json();
       const cartId = data.payload._id;
 
       const response = await fetch(
-        `http://localhost:8080/api/payment/${cartId}`,
+        `https://priotti-concept-backend.onrender.com/api/payment/${cartId}`,
         {
           method: "POST",
           headers: {

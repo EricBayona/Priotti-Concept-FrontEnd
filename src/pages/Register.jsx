@@ -33,11 +33,14 @@ export default function Register() {
       const dataToSend = { ...formData };
       delete dataToSend.acepta;
 
-      const response = await fetch("http://localhost:8080/api/auth/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(dataToSend),
-      });
+      const response = await fetch(
+        "https://priotti-concept-backend.onrender.com/api/auth/register",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(dataToSend),
+        }
+      );
 
       const data = await response.json();
 
