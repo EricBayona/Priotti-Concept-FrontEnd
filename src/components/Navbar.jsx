@@ -38,12 +38,12 @@ export default function Navbar() {
         )}
       </div>
       <header className="sticky top-0 z-40 bg-white/80 backdrop-blur border-b border-neutral-200">
-        <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+        <div className="flex flex-wrap md:flex-nowrap items-center gap-x-4 gap-y-2 justify-center">
           <Link to="/" className="text-xl font-semibold tracking-wide">
             Priotti Concept
           </Link>
 
-          <nav className="flex items-center gap-6">
+          <nav className="flex flex-wrap md:flex-nowrap items-center gap-6">
             <NavLink
               to="/"
               className={({ isActive }) =>
