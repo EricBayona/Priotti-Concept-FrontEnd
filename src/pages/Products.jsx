@@ -34,7 +34,7 @@ export default function Products() {
         categoria === "Ver todos"
           ? "products"
           : `products?category=${categoria}`;
-      const { data } = await api.get(endPoint);
+      const { data } = await api.get(`/api/${endPoint}`);
       setProducts(data.payload.docs || []);
       setSelectCategoria(categoria === "Ver todos" ? null : categoria);
     } catch (error) {

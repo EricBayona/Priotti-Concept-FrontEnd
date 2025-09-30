@@ -21,10 +21,10 @@ export const CartProvider = ({ children }) => {
   useEffect(() => {
     if (token) {
       setFalseCart([]);
-      localStorage.removeItem("falseCart"); // si lo estás persistiendo
+      localStorage.removeItem("falseCart");
     }
   }, [token]);
-  // Cargar carrito desde backend al iniciar sesión / recargar página
+
   const loadCart = async () => {
     if (!token) return;
     try {
@@ -50,12 +50,10 @@ export const CartProvider = ({ children }) => {
           (item) => item.product._id === product._id
         );
         if (index !== -1) {
-          // Ya existe: sumamos cantidad
           const updated = [...prev];
           updated[index].quantity += quantity;
           return updated;
         } else {
-          // No existe: lo agregamos
           return [...prev, { product, quantity }];
         }
       });
@@ -84,7 +82,6 @@ export const CartProvider = ({ children }) => {
     }
   };
 
-  // Eliminar producto del carrito
   const removeFromCart = async (product) => {
     if (!token) {
       setFalseCart((prev) =>
@@ -104,7 +101,6 @@ export const CartProvider = ({ children }) => {
     }
   };
 
-  // Vaciar carrito
   const clearCart = async () => {
     if (!token) {
       setFalseCart([]);

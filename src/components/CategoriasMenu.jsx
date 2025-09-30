@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { Menu, X } from "lucide-react"; // íconos del menú hamburguesa
+import { Menu, X } from "lucide-react";
 import { Link } from "react-router-dom";
 import CartWidget from "./CartWidget";
 
@@ -67,7 +67,7 @@ export default function CategoriasMenu({ onSelectCategoria }) {
                   <button
                     onClick={() => {
                       onSelectCategoria(cat);
-                      setOpen(false); // cerrar menú al seleccionar
+                      setOpen(false);
                     }}
                     className="cursor-pointer w-full text-left text-gray-700 hover:text-black transition"
                   >
