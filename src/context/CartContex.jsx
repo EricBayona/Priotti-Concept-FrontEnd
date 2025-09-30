@@ -68,7 +68,7 @@ export const CartProvider = ({ children }) => {
 
     try {
       await fetch(
-        `https://priotti-concept-backend.onrender.com/carts/${cid}/product/${product._id}`,
+        `https://priotti-concept-backend.onrender.com/api/carts/${cid}/product/${product._id}`,
         {
           method: "POST",
           headers: {
