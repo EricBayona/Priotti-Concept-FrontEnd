@@ -28,9 +28,12 @@ export const CartProvider = ({ children }) => {
   const loadCart = async () => {
     if (!token) return;
     try {
-      const res = await fetch("http://localhost:8080/api/carts/mycart", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await fetch(
+        "https://priotti-concept-backend.onrender.com/api/carts/mycart",
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       const data = await res.json();
       setCart(data.payload.products || []);
     } catch (error) {
@@ -65,7 +68,7 @@ export const CartProvider = ({ children }) => {
 
     try {
       await fetch(
-        `http://localhost:8080/api/carts/${cid}/product/${product._id}`,
+        `https://priotti-concept-backend.onrender.com/carts/${cid}/product/${product._id}`,
         {
           method: "POST",
           headers: {
@@ -91,10 +94,13 @@ export const CartProvider = ({ children }) => {
     }
 
     try {
-      await fetch(`http://localhost:8080/api/carts/${cid}/product/${product}`, {
-        method: "DELETE",
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      await fetch(
+        `https://priotti-concept-backend.onrender.com/api/carts/${cid}/product/${product}`,
+        {
+          method: "DELETE",
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       await loadCart();
     } catch (error) {
       console.error("Error eliminando producto:", error);
@@ -107,10 +113,13 @@ export const CartProvider = ({ children }) => {
     }
 
     try {
-      await fetch(`http://localhost:8080/api/carts/${cid}`, {
-        method: "DELETE",
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      await fetch(
+        `https://priotti-concept-backend.onrender.com/api/carts/${cid}`,
+        {
+          method: "DELETE",
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       setCart([]);
     } catch (error) {
       console.error("Error vaciando carrito:", error);
