@@ -17,7 +17,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
             position="top-right"
             toastOptions={{
               // estilos por defecto
-              duration: 500,
+              duration: 1500,
               style: {
                 background: "#4ade80",
                 color: "#ffffff",

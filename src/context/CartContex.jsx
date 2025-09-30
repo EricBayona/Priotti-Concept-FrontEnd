@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { toast } from "react-hot-toast";
 import { useUser } from "./UserContext";
+import api from "../services/api";
 
 // Creamos el contexto
 const CartContext = createContext();
@@ -28,13 +29,9 @@ export const CartProvider = ({ children }) => {
   const loadCart = async () => {
     if (!token) return;
     try {
-      const res = await fetch(
-        "https://priotti-concept-backend.onrender.com/api/carts/mycart",
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-      const data = await res.json();
+      const { data } = await api.get("/api/carts/mycart", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       setCart(data.payload.products || []);
     } catch (error) {
       console.error("Error cargando carrito:", error);
@@ -67,19 +64,18 @@ export const CartProvider = ({ children }) => {
     }
 
     try {
-      await fetch(
-        `https://priotti-concept-backend.onrender.com/api/carts/${cid}/product/${product._id}`,
+      toast.success("Agregado al carrito");
+      await api.post(
+        `/api/carts/${cid}/product/${product._id}`,
+        { quantity },
         {
-          method: "POST",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify({ quantity }),
         }
       );
       await loadCart();
-      toast.success("Agregado al carrito");
     } catch (error) {
       console.error("Error agregando producto al carrito:", error);
     }
@@ -94,13 +90,9 @@ export const CartProvider = ({ children }) => {
     }
 
     try {
-      await fetch(
-        `https://priotti-concept-backend.onrender.com/api/carts/${cid}/product/${product}`,
-        {
-          method: "DELETE",
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+      await api.delete(`/api/carts/${cid}/product/${product}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       await loadCart();
     } catch (error) {
       console.error("Error eliminando producto:", error);
@@ -113,13 +105,9 @@ export const CartProvider = ({ children }) => {
     }
 
     try {
-      await fetch(
-        `https://priotti-concept-backend.onrender.com/api/carts/${cid}`,
-        {
-          method: "DELETE",
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+      await api.delete(`/api/carts/${cid}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       setCart([]);
     } catch (error) {
       console.error("Error vaciando carrito:", error);

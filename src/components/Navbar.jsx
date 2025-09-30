@@ -38,7 +38,7 @@ export default function Navbar() {
         )}
       </div>
       <header className="sticky top-0 z-40 bg-white/80 backdrop-blur border-b border-neutral-200">
-        <div className="flex flex-wrap md:flex-nowrap items-center gap-x-4 gap-y-2 justify-center">
+        <div className="flex flex-wrap md:flex-nowrap items-center px-4 gap-x-4 gap-y-2 justify-center">
           <Link to="/" className="text-xl font-semibold tracking-wide">
             Priotti Concept
           </Link>
@@ -69,7 +69,7 @@ export default function Navbar() {
               Productos
             </NavLink>
             <NavLink
-              to="/#"
+              to="/location"
               className={({ isActive }) =>
                 `text-sm ${
                   isActive
@@ -102,7 +102,7 @@ export default function Navbar() {
                 }`
               }
             >
-              Resgistarse
+              Registrarse
             </NavLink>
             <CartWidget />
           </nav>

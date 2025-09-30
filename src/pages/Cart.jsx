@@ -32,7 +32,26 @@ export default function Cart() {
       const data = await res.json();
       const cartId = data.payload._id;
 
-      const response = await fetch(
+      const pucharseRes = await fetch(
+        `https://priotti-concept-backend.onrender.com/api/carts/${cartId}/purchase`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer${token}`,
+          },
+        }
+      );
+      const pucharseData = await pucharseRes.json();
+
+      if (!pucharseRes.ok) {
+        alert("Error en la compra" + pucharseData.message);
+        return;
+      }
+
+      console.log("✅ Ticket creado:", pucharseData);
+
+      const paymentRes = await fetch(
         `https://priotti-concept-backend.onrender.com/api/payment/${cartId}`,
         {
           method: "POST",
@@ -42,7 +61,7 @@ export default function Cart() {
           },
         }
       );
-      const paymentData = await response.json();
+      const paymentData = await paymentRes.json();
       window.location.href = paymentData.init_point;
     } catch (error) {
       console.error("Error al generar checkout:", error);

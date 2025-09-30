@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import api from "../services/api";
 
 export default function Register() {
   const [formData, setFormData] = useState({
@@ -9,6 +10,7 @@ export default function Register() {
     email: "",
     birthDate: "",
     password: "",
+    repitPassword: "",
     acepta: false, // 👉 sigue en el front para manejar el botón
   });
 
@@ -27,24 +29,21 @@ export default function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErrors([]);
+    if (formData.password !== formData.repitPassword) {
+      setErrors(["Las contraseñas no coinciden"]);
+      return;
+    }
 
     try {
-      // 👉 Elimino "acepta" del objeto para no mandarlo al back
+      // 👉 Elimino "acepta" y "repitPassword" del objeto para no mandarlo al back
       const dataToSend = { ...formData };
       delete dataToSend.acepta;
+      delete dataToSend.repitPassword;
 
-      const response = await fetch(
-        "https://priotti-concept-backend.onrender.com/api/auth/register",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(dataToSend),
-        }
-      );
-
-      const data = await response.json();
-
-      if (response.ok) {
+      const { data } = await api.post("/api/auth/register", dataToSend, {
+        headers: { "Content-Type": "application/json" },
+      });
+      if (data.status === "ok") {
         // reseteo el form
         setFormData({
           first_name: "",
@@ -57,7 +56,7 @@ export default function Register() {
         toast.success("Registro exitoso 🎉");
         setTimeout(() => {
           navigate("/login");
-        }, 1500);
+        }, 2500);
       } else {
         // si el back devuelve un array de errores de validación
         console.log({ dataError: data.errors });
@@ -176,6 +175,29 @@ export default function Register() {
               className="mt-1 block w-full px-4 py-2 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-400"
               required
             />
+          </div>
+          <div>
+            <label
+              htmlFor="repitPassword"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Repetir Contraseña
+            </label>
+            <input
+              id="repitPassword"
+              name="repitPassword"
+              type="password"
+              placeholder="********"
+              value={formData.repitPassword}
+              onChange={handleChange}
+              className="mt-1 block w-full px-4 py-2 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-400"
+              required
+            />
+            {formData.password !== formData.repitPassword && (
+              <p className="text-sm text-red-600 mt-1">
+                ⚠️ Las contraseñas no coinciden
+              </p>
+            )}
           </div>
 
           <div className="flex items-center space-x-2">
